@@ -9,17 +9,15 @@
 <body>
 <div class="wrap">
 <div class="topbar"><a class="home" href="../index.html">← iShaker Help</a><a class="lang" href="../ru/11-telemetry-dashboard.html">RU</a></div>
-<span class="badge draft">🚧 Draft — to be written</span><h1>Reading the telemetry dashboard</h1>
-<h2>What this page should cover</h2>
-<ul>
-<li>What the WiFi / MDB / Hardware icons mean (green / red / yellow).</li>
-<li>Why WiFi off does not mean no sales.</li>
-<li>Downtime = total for the period, not right now.</li>
-<li>Yellow bar = service mode.</li>
-<li>A dash instead of a flavor = an offline sale.</li>
-</ul>
-<h2>Source</h2>
-<p>See the Russian version — source: Дополнить существующую страницу «Authorization & control in iShaker telemetry».</p>
+<h1>Reading the telemetry dashboard</h1>
+<p>The dashboard shows machine status and sales. Here’s how to read it so you don’t confuse “no connection” with “no sales”.</p>
+<h2>Status icons</h2>
+<p>At the top are the channels: <strong>WiFi</strong> (server link), <strong>MDB</strong> (payment terminal), <strong>Hardware</strong> (machine). Green is fine; yellow/red means a problem on that channel.</p>
+<h2>WiFi off ≠ no sales</h2>
+<p>Even without a server link, card payments usually work (Nayax on its own line) and sales accumulate locally and upload later. Zero sales with a live machine — check MDB / the screen / service mode separately.</p>
+<h2>Downtime and percentages</h2>
+<p>Downtime and big percentages are a <strong>total for the period</strong> (a week by default), not “right now”. A percentage spike is what accumulated over the window, not the current state.</p>
+<div class="note">A yellow bar = the machine is in service mode (sales paused). A dash instead of a flavor name in sales = an offline sale; details may sync later or be unavailable.</div>
 <hr>
 <p class="foot">Draft / черновик — для внутреннего ревью перед публикацией. iShaker USA.</p>
 </div>
