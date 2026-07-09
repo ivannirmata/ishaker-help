@@ -17,6 +17,9 @@ h1{font-size:34px;line-height:1.18;margin:0 0 16px;}
 h2{font-size:23px;margin:34px 0 12px;border-bottom:2px solid #eee;padding-bottom:6px;}
 p,li{font-size:17px;line-height:1.65;}
 ol li,ul li{margin-bottom:8px;}
+figure{margin:24px 0;text-align:center;}
+figure img{max-width:100%;height:auto;border:1px solid #e5e5e5;border-radius:8px;}
+figcaption{font-size:14px;color:#777;margin-top:8px;}
 .note{background:#fff8e1;border-left:4px solid #f4b400;padding:12px 16px;font-size:15px;color:#6b5900;border-radius:0 8px 8px 0;margin:20px 0;}
 .badge{display:inline-block;background:#e8f0fe;color:#1a56b0;font-size:13px;padding:3px 10px;border-radius:12px;margin-bottom:16px;}
 .foot{color:#999;font-size:13px;margin-top:20px;}
@@ -120,7 +123,8 @@ ARTICLES = [
 <li>Controller Reboot.</li>
 <li>Calibrate the slot (see the calibration page).</li>
 </ol>
-<div class="note">If the flavor shows as “taste.xxx” or a white square, the icon/name hasn’t synced yet. Message us and we’ll fix it; a second Update Database after our fix usually resolves it.</div>"""},
+<div class="note">If the flavor shows as “taste.xxx” or a white square, the icon/name hasn’t synced yet. Message us and we’ll fix it; a second Update Database after our fix usually resolves it.</div>""",
+ "img":"update-database.jpg","cap_ru":"Экран Controller Configuration: бренд, продукт и вкус по слотам.","cap_en":"Controller Configuration screen: brand, product and taste per slot."},
 {"num":3,"prio":1,"slug":"03-flavor-not-showing-after-update",
  "ru_title":"Новый вкус не появился после «Update Database»","en_title":"New flavor doesn’t appear after “Update Database”",
  "ru":"""<h2>Полный путь синхронизации</h2>
@@ -152,7 +156,8 @@ ARTICLES = [
 <li>The product isn’t registered on our side yet — send a photo of the container and facts panel (see “Adding your own powder / flavor”).</li>
 <li>The drink category/type doesn’t match — check that the correct category is selected.</li>
 </ul>
-<div class="note">If after Update Database and a reboot the flavor still doesn’t show, or shows as “taste.xxx” / a white square, message us and we’ll fix it on our side.</div>"""},
+<div class="note">If after Update Database and a reboot the flavor still doesn’t show, or shows as “taste.xxx” / a white square, message us and we’ll fix it on our side.</div>""",
+ "img":"update-database.jpg","cap_ru":"Кнопка «Update DataBase From Server» на экране конфигурации.","cap_en":"The “Update DataBase From Server” button on the configuration screen."},
 {"num":4,"prio":1,"slug":"04-powder-dose-calibration",
  "ru_title":"Доза порошка неверная (ставлю 30 г — выходит 15 г)","en_title":"Powder dose is wrong (set 30 g, get 15 g)",
  "ru":"""<p>Если вы задаёте одну дозу порошка, а по факту выходит меньше (или шейк слишком жидкий) — почти всегда дело в калибровке и в правиле рецепта.</p>
@@ -236,7 +241,8 @@ ARTICLES = [
 <li><strong>Shaker S:</strong> in the Service Menu the level icons (bottle / cups / powder) are tappable — tap the water icon and set the current level.</li>
 <li><strong>Other models:</strong> via the Inventory / Remains section.</li>
 </ul>
-<div class="note">The machine only counts consumption — the actual remaining amount is entered manually at refill. If the value keeps drifting after you set it, message us.</div>"""},
+<div class="note">The machine only counts consumption — the actual remaining amount is entered manually at refill. If the value keeps drifting after you set it, message us.</div>""",
+ "img":"service-pumping-water.jpg","cap_ru":"Сервисное меню: кнопка «Pumping water»; уровень воды здесь показан как ∞.","cap_en":"Service menu: the “Pumping water” button; the water level here shows as ∞."},
 {"num":7,"prio":1,"slug":"07-screen-frozen-recovery",
  "ru_title":"Экран завис / застрял на 100% / не реагирует","en_title":"Screen frozen / stuck at 100% / not responding",
  "ru":"""<p>Если экран завис, застрял на «100%» при приготовлении или не реагирует на касания — вот что можно сделать самому, безопасно.</p>
@@ -684,7 +690,8 @@ ARTICLES = [
 <li>Auto-wash can be scheduled (e.g. hourly) or run after each shake.</li>
 <li>It’s enabled in the service menu (Wash section).</li>
 </ul>
-<div class="note">AutoClean reduces buildup but doesn’t replace periodic manual cleaning. If you’re unsure what interval fits your traffic, message us and we’ll suggest one.</div>"""},
+<div class="note">AutoClean reduces buildup but doesn’t replace periodic manual cleaning. If you’re unsure what interval fits your traffic, message us and we’ll suggest one.</div>""",
+ "img":"service-wash-mixer.jpg","cap_ru":"Сервисное меню: «Wash Mixer» — запуск ополаскивания миксера.","cap_en":"Service menu: “Wash Mixer” — start the mixer rinse."},
 {"num":30,"prio":3,"slug":"30-third-party-mdb-terminals",
  "ru_title":"Сторонние MDB-терминалы — совместимость","en_title":"Third-party MDB terminals — compatibility",
  "ru":"""<p>Машина общается с платёжными устройствами по протоколу <strong>MDB (уровень 3)</strong> — тот же разъём, что у любого MDB-терминала.</p>
@@ -709,9 +716,14 @@ def w(path, content):
 
 w("assets/style.css", STYLE)
 
+def fig(src, cap):
+    return '<figure><img src="../assets/img/%s" alt=""><figcaption>%s</figcaption></figure>' % (src, cap)
+
 for a in ARTICLES:
-    w("ru/%s.html" % a["slug"], page("ru", a["ru_title"], a["ru"], "../en/%s.html" % a["slug"]))
-    w("en/%s.html" % a["slug"], page("en", a["en_title"], a["en"], "../ru/%s.html" % a["slug"]))
+    ru_body = a["ru"] + (fig(a["img"], a["cap_ru"]) if a.get("img") else "")
+    en_body = a["en"] + (fig(a["img"], a["cap_en"]) if a.get("img") else "")
+    w("ru/%s.html" % a["slug"], page("ru", a["ru_title"], ru_body, "../en/%s.html" % a["slug"]))
+    w("en/%s.html" % a["slug"], page("en", a["en_title"], en_body, "../ru/%s.html" % a["slug"]))
 
 def index_rows(prio):
     rows = []
